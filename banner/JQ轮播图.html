@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="FHS" content="dashan">
+        <title> jQuery实现轮播图 </title>
+        <script src="jquery.js"></script>
+        <style>
+            body{
+                margin: 0;
+            }
+            .banner{
+                height: 500px;
+            }
+            img{
+                width: 100%;
+                height: 100%;
+            }
+            .btn{
+                position: absolute;
+                top: 450px;
+                left: calc(50% - 107px);
+            }
+            span{
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+                background: white;
+                border-radius: 50%;
+                margin: 0 10px;
+            }
+            .red{
+                background: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="banner">
+            <img src="imgs/001.jpg" alt="">
+            <div class="btn">  
+                <span class="red"></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <script>
+            $(function(){
+                var num = 1
+                // 手动轮播
+                $('span').hover(function(){
+                    num = $(this).index() + 1
+                    $('img').attr("src",'imgs/00' + num + '.jpg')
+                    $(this).addClass('red').siblings().removeClass('red')
+                })
+                // 自动播放
+                autoplay()
+                function autoplay(){
+                   timer = setInterval(function(){
+                        num++
+                        if( num == 5 ){
+                            num = 1
+                        }
+                        $("span").eq(num-1).addClass('red').siblings().removeClass('red')
+                        $('img').attr("src",'imgs/00' + num + '.jpg')
+                    },1000)
+                }
+                // 鼠标放在图片上时停止轮播
+                $('img').mouseover(function(){
+                    clearInterval(timer)
+                })
+                $('img').mouseleave(function(){
+                    autoplay()
+                })
+            })
+        </script>
+    </body>
+</html>

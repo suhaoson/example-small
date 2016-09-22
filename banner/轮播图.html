@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="FHS" content="dashan">
+        <title> 轮播图 </title>
+        <style>
+            body{
+                margin: 0;
+            }
+            .banner{
+                height: 500px;
+            }
+            img{
+                width: 100%;
+                height: 100%;
+            }
+            .btn{
+                position: absolute;
+                top: 450px;
+                left: calc(50% - 107px);
+            }
+            span{
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+                background: white;
+                border-radius: 50%;
+                margin: 0 10px;
+            }
+            .red{
+                background: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="banner">
+            <img src="imgs/001.jpg" alt="">
+            <div class="btn">  
+                <span class="red"></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <script>
+            var img = document.querySelector('img')
+            var spans = document.querySelectorAll('span')
+            var num = 1
+            var num2 = 1
+            // 手动切换
+            for( var i = 0;i < spans.length;i++ ){
+                spans[i].index = i
+                spans[i].onclick = function(){
+                    for( var i = 0;i < spans.length;i++ ){
+                        spans[i].className = ''
+                    }
+                    num = this.index + 1
+                    num2 = this.index
+                    img.src = 'imgs/00' + num + '.jpg'
+                    this.className = 'red'
+                }
+            }
+            // 自动播放
+            autoplay()
+            function autoplay(){
+                timer = setInterval(function(){
+                    num2++
+                    if( num2 > 4 ){
+                        num2 = 1
+                    }
+                    for( var i = 0;i < spans.length;i++ ){
+                        spans[i].className = ''
+                    }
+                    img.src = 'imgs/00' + num2 + '.jpg'
+                    spans[num2 - 1].className = 'red'
+                },5000)
+            }
+            // 鼠标放在img上时停止自动轮播
+            img.onmouseover = function(){
+                clearInterval(timer)
+            }
+            img.onmouseout = function(){
+                autoplay()
+            }
+        </script>
+    </body>
+</html>
